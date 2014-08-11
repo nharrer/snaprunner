@@ -14,6 +14,7 @@ Features
 - Clean up of either differential and or full backups which are older then a given amount of days.
 - Status mail upon successful/failed backup runs.
 - Automatically creates meaningfull backup file names by including machine, drive, date/time and backup generation count.
+- Simulation of backup and clean up possible.
 
 Issues
 ------
@@ -25,11 +26,8 @@ Requirements
 
 Python 2.x has to be installed.
 
-Example
--------
-
-NOTE: If python.exe is not set in PATH, use full path of python.exe (e.g. C:\python27\python.exe).
-
+Example 1
+---------
 
     python.exe snaprunner.py "\\10.0.0.200\Public\backups\" C: --diffcount 10 --cmd C:\devtools\Snapshot\snapshot.exe --exclude \Sandbox --mail_to nobody@fakemail.com --mail_from "snapshot <root@fakemail.com>" --mail_smtp mail.com
 
@@ -39,12 +37,23 @@ NOTE: If python.exe is not set in PATH, use full path of python.exe (e.g. C:\pyt
 - Excludes the Directory `C:\Sandbox`
 - Success/Fail-Mail is sent to `nobody@fakemail.com` via SMTP Server `mail.com`
 
+NOTE 1: If python.exe is not set in PATH, use full path of python.exe (e.g. C:\python27\python.exe).
+
+NOTE 2: command lines like this are indented to be used in task scheduler to run hourly, daily, weekly etc.
+
+Example 2
+---------
 
     python.exe snaprunner.py "\\10.0.0.200\Public\backups\" C: --diffcount 10 --cmd C:\devtools\Snapshot\snapshot.exe -dd 60 -d 90 --exclude \Sandbox --mail_to nobody@fakemail.com --mail_from "snapshot <root@fakemail.com>" --mail_smtp mail.com
 
-- Same as above but with clean up:
-- `-dd 60` Deletes differential backups after 60 days.
-- `-d 90` Deletes all backups after 90 days
+- Same as example 1 but with clean up:
+ - `-dd 60` Deletes differential backups after 60 days.
+ - `-d 90` Deletes all backups after 90 days.
+
+
+NOTE: -d does never delete full backups if there are any differential backups kepts which depend on the full backup.
+
+NOTE: Use option `--simulate` if you are unsure about the delete options. `--simulate` does neither create a backup nor deletes any files. A status mail is created however.
 
 Usage
 -----
