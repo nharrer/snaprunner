@@ -3,9 +3,15 @@ snaprunner
 
 A python wrapper for [Drive Snapshot](http://www.drivesnapshot.de/en/).
 
-Drive Snapshot is simple but effective backup tool for creating image backups.
+Drive Snapshot is a simple but effective backup tool for creating image backups.
 
 `snaprunner` is a command line utility which itself calls the Drive Snapshot executable. It adds certain features which Drive Snapshot is missing and which are especially useful for scheduled backup scenarios.
+
+
+Project Home
+------------
+
+[Project snaprunner](http://www.netzgewitter.com/projects/snaprunner/).
 
 
 Features
@@ -31,7 +37,7 @@ Example 1
 
     python.exe snaprunner.py "\\10.0.0.200\Public\backups\" C: --diffcount 10 --cmd C:\devtools\Snapshot\snapshot.exe --exclude \Sandbox --mail_to nobody@fakemail.com --mail_from "snapshot <root@fakemail.com>" --mail_smtp mail.com
 
-- Creates a backup of drive C: to directory `\\10.0.0.200\Public\backups\` 
+- Creates backups of drive C: in directory `\\10.0.0.200\Public\backups\` 
 - Creates a full backup after every 10th differential backup
 - Expects snapshot.exe in `C:\devtools\Snapshot\snapshot.exe`
 - Excludes the Directory `C:\Sandbox`
