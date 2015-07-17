@@ -53,8 +53,8 @@ Example 2
     python.exe snaprunner.py "\\10.0.0.200\Public\backups\" C: --diffcount 10 --cmd C:\devtools\Snapshot\snapshot.exe -dd 60 -d 90 --exclude \Sandbox --mail_to nobody@fakemail.com --mail_from "snapshot <root@fakemail.com>" --mail_smtp mail.com
 
 - Same as example 1 but with clean up:
- - `-dd 60` Deletes differential backups after 60 days.
- - `-d 90` Deletes all backups after 90 days.
+ - `-dd 60` Deletes differential backups older then 60 days.
+ - `-d 90` Deletes all backups older then 90 days.
 
 
 NOTE: -d does never delete full backups if there are any differential backups which are not deleted and which depend on the full backup.
