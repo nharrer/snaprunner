@@ -289,9 +289,22 @@ class snapshot:
             msg._headers = [h for h in msg._headers if h[0] != 'Content-Transfer-Encoding']
             email.encoders.encode_base64(msg)
 
-            server = smtplib.SMTP(self.args.mail_smtp)
-            server.sendmail(self.args.mail_from, self.args.mail_to, msg.as_string())
-            server.quit()
+            if (self.args.mail_ssl):
+                server = smtplib.SMTP_SSL(self.args.mail_smtp)
+            else:
+                server = smtplib.SMTP(self.args.mail_smtp)
+
+            if self.args.mail_debug:
+                server.set_debuglevel(1)
+
+            # log in, if credentials are given
+            if self.args.mail_user != None or self.args.mail_password != None:
+                server.login(self.args.mail_user, self.args.mail_password)
+
+            try:
+                server.sendmail(self.args.mail_from, self.args.mail_to, msg.as_string())
+            finally:
+                server.quit()
 
     def execute(self):
         # We catch any exceptions during backup and cleanup and 
@@ -371,9 +384,13 @@ if __name__ == "__main__":
 
     # mail options
     mailgroup = parser.add_argument_group('mail options')
-    mailgroup.add_argument('--mail_to', help='Mail address for status mail.')
-    mailgroup.add_argument('--mail_from', help='Sender mail address for mail. Required if --mail_to is specified.')
-    mailgroup.add_argument('--mail_smtp', help='Smtp server for mailing. Required if --mail_to is specified.')
+    mailgroup.add_argument('--mail-to', help='Mail address for status mail.')
+    mailgroup.add_argument('--mail-from', help='Sender mail address for mail. Required if --mail_to is specified.')
+    mailgroup.add_argument('--mail-smtp', help='Smtp server for mailing. Required if --mail_to is specified.')
+    mailgroup.add_argument('--mail-ssl', help='Use SSL (port 465) for sending mail.', action='store_true')
+    mailgroup.add_argument('--mail-user', help='User for mailing if authentication is needed.')
+    mailgroup.add_argument('--mail-password', help='User  for mailing if authentication is needed.')
+    mailgroup.add_argument('--mail-debug', help='Outputs  messages for debugging mail issues.', action='store_true')
     args = parser.parse_args()
 
     if args.mail_to:

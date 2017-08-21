@@ -67,8 +67,10 @@ Usage
     usage: snaprunner.py [-h] [--cmd CMD] [--diffcount X]
                          [--exclude [EXCLUDE [EXCLUDE ...]]]
                          [--argsfile ARGS_FILE] [--simulate] [--delete DAYS]
-                         [--deletediff DAYS] [--mail_to MAIL_TO]
-                         [--mail_from MAIL_FROM] [--mail_smtp MAIL_SMTP]
+                         [--deletediff DAYS] [--mail-to MAIL_TO]
+                         [--mail-from MAIL_FROM] [--mail-smtp MAIL_SMTP]
+                         [--mail-ssl] [--mail-user MAIL_USER]
+                         [--mail-password MAIL_PASSWORD] [--mail-debug]
                          backupdir drive
     
     positional arguments:
@@ -101,11 +103,19 @@ Usage
                             days. (default: None)
     
     mail options:
-      --mail_to MAIL_TO     Mail address for status mail. (default: None)
-      --mail_from MAIL_FROM
+      --mail-to MAIL_TO     Mail address for status mail. (default: None)
+      --mail-from MAIL_FROM
                             Sender mail address for mail. Required if --mail_to is
                             specified. (default: None)
-      --mail_smtp MAIL_SMTP
+      --mail-smtp MAIL_SMTP
                             Smtp server for mailing. Required if --mail_to is
                             specified. (default: None)
-
+      --mail-ssl            Use SSL (port 465) for sending mail. (default: False)
+      --mail-user MAIL_USER
+                            User for mailing if authentication is needed.
+                            (default: None)
+      --mail-password MAIL_PASSWORD
+                            User for mailing if authentication is needed.
+                            (default: None)
+      --mail-debug          Outputs messages for debugging mail issues. (default:
+                            False)
